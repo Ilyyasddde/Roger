@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Хмельной Роджер — бар в Тюмени</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700;800&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+
+    --bg: #17120F;
+    --panel: #211A15;
+    --panel-2: #2A2118;
+    --ink: #EFE6D8;
+    --ink-dim: #C9BBA6;
+    --brass: #C9A227;
+    --hop: #6E8F52;
+    --rust: #A13D2C;
+    --line: #3A2E22;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'PT Sans', Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: 'Bitter', Georgia, serif; margin: 0; }
+  a { color: inherit; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 16px 0; position: sticky; top: 0; z-index: 5; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: 'Bitter', serif; font-weight: 700; font-size: 19px; letter-spacing: .3px; }
+  .brand svg { flex: none; }
+  nav a { text-decoration: none; margin-left: 20px; font-size: 14px; color: var(--ink-dim); }
+  nav a:hover { color: var(--brass); }
+  @media (max-width: 520px) { nav { display: none; } }
+
+  .hero { background: radial-gradient(120% 160% at 15% 0%, #2A2016 0%, var(--bg) 60%); padding: 68px 0 54px; border-bottom: 4px solid var(--brass); }
+  .hero .eyebrow { color: var(--brass); font-size: 15px; margin-bottom: 12px; }
+  .hero h1 { font-size: clamp(36px, 6.4vw, 56px); line-height: 1.08; max-width: 11ch; font-weight: 800; }
+  .hero p.lead { margin-top: 18px; max-width: 44ch; color: var(--ink-dim); font-size: 18px; }
+  .hero .meta { margin-top: 30px; display: flex; gap: 30px; flex-wrap: wrap; font-size: 15px; }
+  .hero .meta b { display: block; font-family: 'Bitter', serif; font-size: 18px; color: var(--brass); font-weight: 700; }
+  .btnrow { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+  .btn { display: inline-block; background: var(--rust); color: #fff; padding: 13px 26px; border-radius: 2px; text-decoration: none; font-size: 16px; border: 1px solid #7f2f21; }
+  .btn:hover { background: #8f3524; }
+  .btn.ghost { background: transparent; border: 1px solid var(--brass); color: var(--brass); }
+  .btn.ghost:hover { background: rgba(201,162,39,.1); }
+
+  section { padding: 54px 0; }
+  section h2 { font-size: 28px; margin-bottom: 6px; }
+  .sub { color: var(--brass); font-size: 15px; margin-bottom: 26px; }
+  hr.rule { border: none; border-top: 1px solid var(--line); margin: 0; }
+
+  .about p { max-width: 62ch; color: var(--ink-dim); }
+  .tags { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .tags li { border: 1px solid var(--line); color: var(--ink-dim); padding: 6px 14px; border-radius: 2px; font-size: 14px; }
+
+  /* Menu accordion */
+  .menu details {
+    border-bottom: 1px solid var(--line);
+  }
+  .menu details:first-child { border-top: 1px solid var(--line); }
+  .menu summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 4px;
+    font-family: 'Bitter', serif;
+    font-size: 19px;
+    font-weight: 700;
+  }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu summary .count { font-family: 'PT Sans', sans-serif; font-weight: 400; font-size: 14px; color: var(--ink-dim); }
+  .menu summary::after { content: "+"; color: var(--brass); font-size: 22px; margin-left: 12px; }
+  .menu details[open] summary::after { content: "–"; }
+  .menu ul { list-style: none; margin: 0; padding: 0 4px 18px; }
+  .menu li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px dashed var(--line); font-size: 15.5px; }
+  .menu li:first-child { border-top: none; }
+  .menu li span.price { color: var(--brass); white-space: nowrap; }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 560px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card { background: var(--panel); border: 1px solid var(--line); padding: 22px 24px; }
+  .info-card h3 { font-size: 17px; margin-bottom: 10px; color: var(--brass); }
+  .info-card p { margin: 4px 0; color: var(--ink-dim); }
+  .info-card a.plain { text-decoration: underline; color: var(--ink); }
+
+  .reviews { display: flex; flex-direction: column; gap: 18px; }
+  .review { background: var(--panel); border-left: 3px solid var(--brass); padding: 20px 24px; }
+  .review .stars { color: var(--brass); font-size: 15px; letter-spacing: 2px; }
+  .review p.quote { margin: 10px 0 8px; color: var(--ink); }
+  .review .who { font-size: 14px; color: var(--ink-dim); }
+  .review .reply { margin-top: 12px; padding: 12px 16px; background: var(--panel-2); border-left: 2px solid var(--hop); font-size: 14.5px; color: var(--ink-dim); }
+  .review .reply b { color: var(--hop); }
+
+  footer { background: var(--panel); border-top: 1px solid var(--line); padding: 30px 0; font-size: 14px; color: var(--ink-dim); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer a { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="6" stroke="#C9A227" stroke-width="1.6"/><path d="M9 9h.01M15 9h.01M9.5 12c1 1 4 1 5 0" stroke="#C9A227" stroke-width="1.6" stroke-linecap="round"/><path d="M12 15v6M6 19l3-2M18 19l-3-2M4 21l3-3M20 21l-3-3" stroke="#C9A227" stroke-width="1.4" stroke-linecap="round"/></svg>
+      Хмельной Роджер
+    </div>
+    <nav>
+      <a href="#menu">Меню</a>
+      <a href="#info">Часы и адрес</a>
+      <a href="#reviews">Отзывы</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Бар · Видный м-н, Восточный округ, Тюмень</div>
+    <h1>Пицца, бургеры и завтраки до четырёх утра</h1>
+    <p class="lead">Хмельной Роджер — бар на Сперанского, где кухня работает почти до утра: от комбо-завтрака днём до крылышек и пива глубокой ночью.</p>
+    <div class="meta">
+      <div><b>14:00–04:00</b>сегодня</div>
+      <div><b>кухня до 01:45</b>ежедневно</div>
+      <div><b>★ 5.0</b>по отзывам</div>
+    </div>
+    <div class="btnrow">
+      <a class="btn" href="tel:+79220555849">Позвонить</a>
+      <a class="btn ghost" href="#menu">Смотреть меню</a>
+    </div>
+  </div>
+</div>
+
+<section class="about">
+  <div class="wrap">
+    <h2>О баре</h2>
+    <p class="sub">Пицца, бургеры и авторский чай под одной крышей</p>
+    <p>Большое меню на любой час: утром — комбо-завтраки и блинчики, вечером — пицца, бургеры и закуски к пиву, а на сладкое — тарталетки и авторский чай без спешки. Кухня работает почти до утра, так что заглянуть можно и после полуночи.</p>
+    <ul class="tags">
+      <li>Пицца</li>
+      <li>Бургеры</li>
+      <li>Работаем до 04:00</li>
+      <li>Кухня до 01:45</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="menu" class="menu">
+  <div class="wrap">
+    <h2>Меню</h2>
+    <p class="sub">Полный список — открывайте нужный раздел</p>
+
+    <details open>
+      <summary>Завтраки <span class="count">4</span></summary>
+      <ul>
+        <li>Комбо завтрак <span class="price">449 ₽</span></li>
+        <li>Блинчики с ветчиной и сыром <span class="price">289 ₽</span></li>
+        <li>Сендвич с курицей и беконом <span class="price">398 ₽</span></li>
+        <li>Французский омлет <span class="price">389 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Салаты <span class="count">3</span></summary>
+      <ul>
+        <li>Коул слоу с курицей <span class="price">300 ₽</span></li>
+        <li>Салат греческий <span class="price">300 ₽</span></li>
+        <li>Цезарь <span class="price">330 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Пицца <span class="count">13</span></summary>
+      <ul>
+        <li>№2 Ей понравится <span class="price">720 ₽</span></li>
+        <li>№3 Деревенская <span class="price">720 ₽</span></li>
+        <li>№5 Цыплёнок терияки <span class="price">680 ₽</span></li>
+        <li>№7 Салями, как в Майами <span class="price">660 ₽</span></li>
+        <li>№8 Гавайская <span class="price">680 ₽</span></li>
+        <li>№9 Сырная с маслинами <span class="price">580 ₽</span></li>
+        <li>№10 Цезарь <span class="price">680 ₽</span></li>
+        <li>№11 Спайси <span class="price">759 ₽</span></li>
+        <li>№12 Грибная <span class="price">759 ₽</span></li>
+        <li>№13 Бургер <span class="price">759 ₽</span></li>
+        <li>№14 Груша с горгонзолой и фисташками <span class="price">820 ₽</span></li>
+        <li>№15 Четыре сыра <span class="price">820 ₽</span></li>
+        <li>№16 Ананас с горгонзолой и фисташками <span class="price">820 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Бургеры <span class="count">8</span></summary>
+      <ul>
+        <li>№1 Классика <span class="price">449 ₽</span></li>
+        <li>№2 Сырный <span class="price">490 ₽</span></li>
+        <li>№3 Барбекю <span class="price">519 ₽</span></li>
+        <li>№4 Куриный <span class="price">490 ₽</span></li>
+        <li>№5 Грибной <span class="price">490 ₽</span></li>
+        <li>№6 Бургер фри <span class="price">490 ₽</span></li>
+        <li>№7 Цезарь <span class="price">490 ₽</span></li>
+        <li>№8 Двойной <span class="price">619 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Закуски <span class="count">10</span></summary>
+      <ul>
+        <li>Гренки 100г <span class="price">159 ₽</span></li>
+        <li>Картофель по-деревенски 100г <span class="price">159 ₽</span></li>
+        <li>Картофель фри 100г <span class="price">159 ₽</span></li>
+        <li>Кольца кальмара <span class="price">289 ₽</span></li>
+        <li>Крылышки Баффало <span class="price">369 ₽</span></li>
+        <li>Луковые кольца <span class="price">229 ₽</span></li>
+        <li>Наггетсы 6 шт <span class="price">229 ₽</span></li>
+        <li>Пельмени фри <span class="price">239 ₽</span></li>
+        <li>Рыбные палочки (филе минтая) <span class="price">240 ₽</span></li>
+        <li>Сырные палочки 6 шт <span class="price">280 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Горячие блюда <span class="count">2</span></summary>
+      <ul>
+        <li>Пельмешки мини <span class="price">269 ₽</span></li>
+        <li>Вареники с картошкой и луком <span class="price">299 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Авторский чай <span class="count">3</span></summary>
+      <ul>
+        <li>Чай облепиха, апельсин, маракуйя <span class="price">260 ₽</span></li>
+        <li>Чай гибискус, гранат <span class="price">260 ₽</span></li>
+        <li>Глинтвейн безалкогольный <span class="price">260 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Десерты <span class="count">1</span></summary>
+      <ul>
+        <li>Тарталетка малина / клубника <span class="price">250 ₽</span></li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Соусы <span class="count">4</span></summary>
+      <ul>
+        <li>Соус с брынзой острый, собственного производства <span class="price">80 ₽</span></li>
+        <li>Соус Цезарь, собственного производства <span class="price">80 ₽</span></li>
+        <li>Соус Терияки <span class="price">80 ₽</span></li>
+        <li>Соус Унаги <span class="price">80 ₽</span></li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="info">
+  <div class="wrap">
+    <h2>Часы и адрес</h2>
+    <p class="sub">Работаем почти до утра</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Как нас найти</h3>
+        <p>ул. Михаила Сперанского, 35, 1 этаж</p>
+        <p>Видный м-н, Восточный округ, Тюмень, 625033</p>
+        <p><a class="plain" href="https://2gis.ru/tyumen/geo/1830223003887259" target="_blank" rel="noopener">Открыть на карте 2ГИС →</a></p>
+        <p style="margin-top:14px;"><a class="plain" href="tel:+79220555849">+7 922 055-58-49</a></p>
+      </div>
+      <div class="info-card">
+        <h3>Время работы</h3>
+        <p>Сегодня: 14:00 — 04:00</p>
+        <p>Кухня: пн–вс, 14:00 — 01:45</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="reviews">
+  <div class="wrap">
+    <h2>Отзывы гостей</h2>
+    <p class="sub">5.0 на 2ГИС</p>
+    <div class="reviews">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p class="quote">Атмосферное место с приятными ценами. Очень вкусная кухня, особенно бургеры.</p>
+        <div class="who">Елена Х · 4 посещения</div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p class="quote">Были с подругой — очень понравилось. Пицца, пиво и бургеры просто отличные, вернёмся ещё.</p>
+        <div class="who">Светлана Завьялова · 7 посещений</div>
+        <div class="reply"><b>Хмельной Роджер, бар:</b> Светлана, здравствуйте! Благодарим за приятный отзыв, ждём вас вновь!</div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p class="quote">Были в этом заведении больше 10 раз — решили наконец написать отзыв. Здесь замечательно всё.</p>
+        <div class="who">Айчурок Исматилла Кызы · частый гость</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Хмельной Роджер · Тюмень</div>
+    <div><a href="tel:+79220555849">+7 922 055-58-49</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
